@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="/style.css" />
+        <title>Профиль</title>
+    </head>
+    <body>
+        <div class="me-container">
+            <div class="lgn">
+                <h2>Создан аккаунт в:</h2>
+                <p id="login"></p>
+            </div>
+            <div class="pswd">
+                <h2>Был обновлен в:</h2>
+                <p id="pswd"></p>
+            </div>
+            <a id="exit-link" href="http://localhost:3000/">exit</a>
+        </div>
+        <script>
+            const lgn = document.getElementById("login");
+            const pswd = document.getElementById("pswd");
+            const token = localStorage.getItem("token");
+
+            async function me(login) {
+                return await fetch("/me/", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json;charset=utf-8",
+                    },
+                    body: JSON.stringify({
+                        id: atob(token).split(":::")[0],
+                        //id: "55 or 1=1" sql injection example
+                    }),
+                }).then((data) => data.text());
+            }
+            me((login = atob(token).split(":::")[0])).then((data) => {
+                lgn.innerHTML = JSON.parse(data).createdAt
+                pswd.innerHTML = JSON.parse(data).updatedAt
+            });
+        </script>
+    </body>
+</html>
