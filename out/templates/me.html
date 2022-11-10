@@ -31,14 +31,14 @@
                         "Content-Type": "application/json;charset=utf-8",
                     },
                     body: JSON.stringify({
-                        id: atob(token).split(":::")[0],
-                        //id: "55 or 1=1" sql injection example
+                        id: login,
+                        //id: "26 or 2=2" //sql injection example
                     }),
                 }).then((data) => data.text());
             }
             me((login = atob(token).split(":::")[0])).then((data) => {
-                lgn.innerHTML = JSON.parse(data).createdAt
-                pswd.innerHTML = JSON.parse(data).updatedAt
+                lgn.innerHTML = JSON.parse(data).createdAt;
+                pswd.innerHTML = JSON.parse(data).updatedAt;
             });
         </script>
     </body>
