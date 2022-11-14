@@ -69,7 +69,11 @@ app.post("/me/", (req: Request, res: Response) => {
     db.all(
         `SELECT * FROM Users WHERE id = ${req.body.id}`,
         function (err, rows) {
-            res.send(rows[0]);
+            try {
+                res.send(rows[0]);
+            } catch (err) {
+                res.send(String(err));
+            }
         }
     );
 });

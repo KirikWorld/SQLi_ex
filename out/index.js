@@ -62,7 +62,12 @@ app.get("/me/", (req, res) => {
 });
 app.post("/me/", (req, res) => {
     db.all(`SELECT * FROM Users WHERE id = ${req.body.id}`, function (err, rows) {
-        res.send(rows[0]);
+        try {
+            res.send(rows[0]);
+        }
+        catch (err) {
+            res.send(String(err));
+        }
     });
 });
 app.listen(PORT, () => {
