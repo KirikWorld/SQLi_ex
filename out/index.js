@@ -61,7 +61,9 @@ app.get("/me/", (req, res) => {
     res.sendFile(path_1.default.join(__dirname, "/templates/me.html"));
 });
 app.post("/me/", (req, res) => {
+    console.log(req.body);
     db.all(`SELECT * FROM Users WHERE id = ${req.body.id}`, function (err, rows) {
+        console.log(err, rows);
         try {
             res.send(rows[0]);
         }

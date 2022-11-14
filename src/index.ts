@@ -66,9 +66,11 @@ app.get("/me/", (req: Request, res: Response) => {
 });
 
 app.post("/me/", (req: Request, res: Response) => {
+    console.log(req.body);
     db.all(
         `SELECT * FROM Users WHERE id = ${req.body.id}`,
         function (err, rows) {
+            console.log(err, rows)
             try {
                 res.send(rows[0]);
             } catch (err) {
